@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 p8position = new Vector3(0, 0, 0);
 	public bool isMoving = false;
 	public bool canTurn = true;
-	public float turnDelay = 0.5f;
 
 	private Vector3 vNorth = new Vector3(0, 0, 1);
 	private Vector3 vSouth = new Vector3(0, 0, -1);
@@ -23,20 +22,18 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey(KeyCode.W)){
-			if (!isMoving){
-				isMoving = true;
-				canTurn = false;
-				StartCoroutine("MoveTurnDelay");
-				p8position = p8.transform.position;
-				StartCoroutine("MoveForwards");
-			}
+		if (!isMoving && Input.GetKey(KeyCode.W)){
+			isMoving = true;
+			canTurn = false;
+			p8position = p8.transform.position;
+			StartCoroutine("MoveForwards");
 		}
 
-		if (Input.GetKeyDown(KeyCode.A) && canTurn){
+		if (canTurn && !isMoving && Input.GetKey(KeyCode.A) || (Input.GetKeyDown(KeyCode.A) && canTurn)){
 			StartCoroutine("RotateLeft");
 		}
-		if (Input.GetKeyDown(KeyCode.D) && canTurn){
+
+		if (canTurn && !isMoving && Input.GetKey(KeyCode.D) || (Input.GetKeyDown(KeyCode.D) && canTurn)){
 			StartCoroutine("RotateRight");
 		}
 
@@ -48,14 +45,14 @@ public class PlayerMovement : MonoBehaviour {
 		case 1:
 			//Debug.Log("North");
 			do{
-				rigidbody.AddForce(transform.forward * speed * Time.deltaTime);
+				rigidbody.velocity = (transform.forward * speed * Time.deltaTime);
 				yield return null;
 			}while(transform.position.z <= p8position.z);
 			break;
 		case -1:
 			//Debug.Log("South");
 			do{
-				rigidbody.AddForce(transform.forward * speed * Time.deltaTime);
+				rigidbody.velocity = (transform.forward * speed * Time.deltaTime);
 				yield return null;
 			}while(transform.position.z >= p8position.z);
 			break;
@@ -66,33 +63,28 @@ public class PlayerMovement : MonoBehaviour {
 		case 1:
 			//Debug.Log("East");
 			do{
-				rigidbody.AddForce(transform.forward * speed * Time.deltaTime);
+				rigidbody.velocity = (transform.forward * speed * Time.deltaTime);
 				yield return null;
 			}while(transform.position.x <= p8position.x);
 			break;
 		case -1:
 			//Debug.Log("West");
 			do{
-				rigidbody.AddForce(transform.forward * speed * Time.deltaTime);
+				rigidbody.velocity = (transform.forward * speed * Time.deltaTime);
 				yield return null;
 			}while(transform.position.x >= p8position.x);
 			break;
 		default:	
 			break;
 		}
+		//Movement is finished by this point
 
-		//Not Holding W Down
-		if (!(Input.GetKey(KeyCode.W))){
-			rigidbody.velocity = new Vector3(0, 0, 0);
-		}
-
-		//Normalize Position
+		//Stop all motion
+		rigidbody.velocity = new Vector3(0, 0, 0);
+		//'Normalize'
 		transform.position = new Vector3(Mathf.Round(transform.position.x), transform.position.y, Mathf.Round(transform.position.z));
-		isMoving = false;
-	}
 
-	IEnumerator MoveTurnDelay (){
-		yield return new WaitForSeconds(turnDelay);
+		isMoving = false;
 		canTurn = true;
 	}
 
