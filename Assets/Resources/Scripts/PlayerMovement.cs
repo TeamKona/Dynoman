@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 vEast = new Vector3(1, 0, 0);
 	private Vector3 vWest = new Vector3(-1, 0, 0);
 
+	public bool canMove = true;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!isMoving && Input.GetKey(KeyCode.W)){
+		if (!isMoving && Input.GetKey(KeyCode.W) && canMove){
 			isMoving = true;
 			canTurn = false;
 			p8position = p8.transform.position;
