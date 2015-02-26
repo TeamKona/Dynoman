@@ -25,12 +25,24 @@ public class Bomb : MonoBehaviour {
 
 	IEnumerator BombTimer (){
 
-		Debug.Log("whatever");
 		yield return new WaitForSeconds(bombFuse);
 		GameObject.Find("Player").GetComponent<SpawnBomb>().amount--;
 		GameObject.Destroy(this.gameObject);
+		Instantiate(spawnExplosion,transform.position, transform.rotation);
+
 		Instantiate(spawnExplosion,new Vector3 (transform.position.x,transform.position.y,transform.position.z+1), transform.rotation);
-		//Instantiate(part1, part2, part3);
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x,transform.position.y,transform.position.z+2), transform.rotation);
+
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x,transform.position.y,transform.position.z-1), transform.rotation);
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x,transform.position.y,transform.position.z-2), transform.rotation);
+
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x+1,transform.position.y,transform.position.z), transform.rotation);
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x+2,transform.position.y,transform.position.z), transform.rotation);
+
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x-1,transform.position.y,transform.position.z), transform.rotation);
+		Instantiate(spawnExplosion,new Vector3 (transform.position.x-2,transform.position.y,transform.position.z), transform.rotation);
+
+
 	}
 
 
