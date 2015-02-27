@@ -22,6 +22,17 @@ public class Explosion : MonoBehaviour {
 			Destroy(col.gameObject);
 		}
 
+		if(col.gameObject.tag == "Player")
+		{
+			col.gameObject.GetComponent<PlayerMovement>().alive = false;
+			col.gameObject.transform.position = new Vector3(transform.position.x,transform.position.y-50,transform.position.z);
+		}
+		if(col.gameObject.tag == "Player2")
+		{
+			col.gameObject.GetComponent<P2Movement>().alive2 = false;
+			col.gameObject.transform.position = new Vector3(transform.position.x,transform.position.y-100,transform.position.z);
+		}
+
 	}
 
 	IEnumerator DespawnExplosion (){
