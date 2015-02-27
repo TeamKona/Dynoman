@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool canTurn = true;
 
 	public bool alive = true;
+	public bool respawning = false;
 
 	private Vector3 vNorth = new Vector3(0, 0, 1);
 	private Vector3 vSouth = new Vector3(0, 0, -1);
@@ -48,11 +49,16 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	IEnumerator Respawn () {
+		if(!respawning){
 
-		yield return new WaitForSeconds(3);
-		alive = true;
-		transform.position = new Vector3(0,0,0);
+			respawning = true;
+			GameObject.Find("Level").GetComponent<Score>().scoreNum++;
+			yield return new WaitForSeconds(3);
+			alive = true;
+			transform.position = new Vector3(0,0,0);
+			respawning = false;
 
+		}
 	}
 
 

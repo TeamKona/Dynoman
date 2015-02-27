@@ -23,8 +23,6 @@ public class SpawnBomb : MonoBehaviour {
 
 		}
 
-
-
 	}
 
 	void SpawnBomber()
