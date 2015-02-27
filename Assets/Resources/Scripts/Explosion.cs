@@ -37,7 +37,7 @@ public class Explosion : MonoBehaviour {
 
 	IEnumerator DespawnExplosion (){
 
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(1.5f);
 		GameObject.Destroy(this.gameObject);
 	}
 }
