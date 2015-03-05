@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour {
 	private Vector3 p8position = new Vector3(0, 0, 0);
 	public bool isMoving = false;
 	public bool canTurn = true;
+	public bool isTurning = false;
 
 	public bool alive = true;
 	public bool respawning = false;
@@ -112,20 +113,28 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	IEnumerator RotateLeft () {
-		canTurn = false;
-		for (int i = 0; i < 90; i+=3){
-			transform.Rotate(new Vector3 (0, -3, 0));
-			yield return null;
+		if (!isTurning){
+			isTurning = true;
+			canTurn = false;
+			for (int i = 0; i < 90; i+=3){
+				transform.Rotate(new Vector3 (0, -3, 0));
+				yield return null;
+			}
+			canTurn = true;
+			isTurning = false;
 		}
-		canTurn = true;
 	}
 
 	IEnumerator RotateRight () {
-		canTurn = false;
-		for (int i = 0; i < 90; i+=3){
-			transform.Rotate(new Vector3 (0, 3, 0));
-			yield return null;
+		if (!isTurning){
+			isTurning = true;
+			canTurn = false;
+			for (int i = 0; i < 90; i+=3){
+				transform.Rotate(new Vector3 (0, 3, 0));
+				yield return null;
+			}
+			canTurn = true;
+			isTurning = false;
 		}
-		canTurn = true;
 	}
 }
